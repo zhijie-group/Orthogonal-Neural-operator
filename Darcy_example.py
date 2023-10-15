@@ -41,10 +41,9 @@ from tqdm import *
 from testloss import TestLoss
 from einops import repeat, rearrange
 from ONOmodel2 import ONO2
-from torch.utils.tensorboard import SummaryWriter
 
-train_path = ''
-test_path = ''
+train_path = '../data/piececonst_r421_N1024_smooth1.mat'
+test_path = '../data/piececonst_r421_N1024_smooth2.mat'
 ntrain = args.ntrain
 ntest = 200
 epochs = 500
@@ -294,12 +293,7 @@ def main():
             raise NotImplementedError
         optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
-    use_writer = args.use_tb
-    if use_writer:
-        writer = SummaryWriter(log_dir='./logs/' + args.model + time.strftime('_%m%d_%H_%M_%S'))
-    else:
-        writer = None
-        
+
     print(args)
     print(model)
     count_parameters(model)
@@ -364,9 +358,6 @@ def main():
         rel_err /= ntest
         print("rel_err:{}".format(rel_err))
 
-        if use_writer:
-            writer.add_scalar("train_loss_0", train_loss, ep)
-            writer.add_scalar("val loss all", rel_err, ep)
 
 if __name__ == "__main__":
     main()

@@ -16,7 +16,7 @@ parser.add_argument('--batch-size',type=int, default=8)
 parser.add_argument("--use_tb", type=int, default=0, help="Use TensorBoard: 1 for True, 0 for False")
 parser.add_argument("--gpu", type=str, default='1', help="GPU index to use")
 parser.add_argument("--orth", type=int, default=0)
-parser.add_argument("--psi_dim", type=int, default=64)
+parser.add_argument("--psi_dim", type=int, default=8)
 parser.add_argument('--attn_type',type=str, default=None)
 parser.add_argument('--max_grad_norm',type=float, default=None)
 parser.add_argument('--downsamplex',type=int,default=1)
@@ -37,7 +37,6 @@ from tqdm import *
 from testloss import TestLoss
 from ONOmodel2 import ONO2
 
-from torch.utils.tensorboard import SummaryWriter
 
 
 def count_parameters(model):
@@ -237,11 +236,7 @@ def main():
             raise NotImplementedError
         optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
-    use_writer = args.use_tb
-    if use_writer:
-        writer = SummaryWriter(log_dir='./logs/' + args.model + time.strftime('_%m%d_%H_%M_%S'))
-    else:
-        writer = None
+
         
     print(args)
     print(model)
@@ -288,9 +283,7 @@ def main():
         rel_err /= ntest
         print("rel_err:{}".format(rel_err))
 
-        if use_writer:
-            writer.add_scalar("train_loss_0", train_loss, ep)
-            writer.add_scalar("val loss all", rel_err, ep)
+
 
 if __name__ == "__main__":
     main()

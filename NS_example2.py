@@ -39,7 +39,6 @@ from testloss import TestLoss
 
 from ONOmodel2 import ONO2
 
-from torch.utils.tensorboard import SummaryWriter
 
 data_path = ''
 ntrain = args.ntrain
@@ -260,12 +259,7 @@ def main():
             raise NotImplementedError
         optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 
-    #use_writer = args.use_tb
-    #if use_writer:
-        #writer = SummaryWriter(log_dir='./logs/' + args.model + time.strftime('_%m%d_%H_%M_%S'))
-    #else:
-        #writer = None
-        
+  
     print(args)
     print(model)
     count_parameters(model)

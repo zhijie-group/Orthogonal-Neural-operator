@@ -38,8 +38,6 @@ from testloss import TestLoss
 
 from ONOmodel2 import ONO2
 
-from torch.utils.tensorboard import SummaryWriter
-
 
 
 def count_parameters(model):
@@ -272,12 +270,6 @@ def main():
         else:
             raise NotImplementedError
         optimizer = torch.optim.AdamW(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
-
-    use_writer = args.use_tb
-    if use_writer:
-        writer = SummaryWriter(log_dir='./logs/' + args.model + time.strftime('_%m%d_%H_%M_%S'))
-    else:
-        writer = None
         
     print(args)
     print(model)
@@ -340,9 +332,7 @@ def main():
                 
         print("Epoch {} , train_step_loss:{:.5f} , test_step_loss:{:.5f} , test_full_loss:{:.5f}".format(ep,  train_l2_step / ntrain / T , test_l2_step / ntest / T ,test_l2_full / ntest))
 
-        if use_writer:
-            writer.add_scalar("train_loss_0", train_l2_step/ntrain/T, ep)
-            writer.add_scalar("val loss all", test_l2_full / ntest, ep)
+
 
 if __name__ == "__main__":
     main()
