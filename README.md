@@ -3,6 +3,10 @@ Code for ONO, a neural operator built upon orthogonal attention.
 
 ## Requirements
 The code depends on python 3.7.
+Pytorch
+```bash
+pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu113
+```
 
 
 ## Datasets
